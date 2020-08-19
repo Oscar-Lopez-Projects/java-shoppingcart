@@ -24,6 +24,10 @@ public interface UserService
      */
     User findUserById(long id);
 
+    List<User> findByNameContaining(String username);
+
+    User findByname(String name);
+
     /**
      * Deletes the user record from the database based off of the provided primary key
      *
