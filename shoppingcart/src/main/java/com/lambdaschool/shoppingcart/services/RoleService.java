@@ -1,4 +1,4 @@
 package com.lambdaschool.shoppingcart.services;
 
-public class UserDetailsService {
+public interface RoleService {
 }

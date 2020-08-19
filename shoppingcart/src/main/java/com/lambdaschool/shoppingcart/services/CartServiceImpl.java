@@ -95,11 +95,11 @@ public class CartServiceImpl
                 .getCount() > 0)
         {
             cartrepos.updateCartItemsQuantity(userAuditing.getCurrentAuditor()
-                                                      .get(), updateCart.getCartid(), updateProduct.getProductid(), 1);
+                    .get(), updateCart.getCartid(), updateProduct.getProductid(), 1);
         } else
         {
             cartrepos.addCartItems(userAuditing.getCurrentAuditor()
-                                           .get(), updateCart.getCartid(), updateProduct.getProductid());
+                    .get(), updateCart.getCartid(), updateProduct.getProductid());
         }
 
         return cartrepos.save(updateCart);
@@ -119,7 +119,7 @@ public class CartServiceImpl
                 .getCount() > 0)
         {
             cartrepos.updateCartItemsQuantity(userAuditing.getCurrentAuditor()
-                                                      .get(), updateCart.getCartid(), updateProduct.getProductid(), -1);
+                    .get(), updateCart.getCartid(), updateProduct.getProductid(), -1);
             cartrepos.removeCartItemsQuantityZero();
             cartrepos.removeCartWithNoProducts();
         } else
