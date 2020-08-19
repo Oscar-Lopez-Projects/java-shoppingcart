@@ -33,22 +33,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/webjars/**",
                         "/createnewuser")
                 .permitAll()
-                .antMatchers("/users/users",
-                        "/users/user",
-                        "/users/user/**",
-                        "/carts/cart/**",
-                        "/products/products",
-                        "/products/product",
-                        "/products/product/**"
-                )
-                .hasRole("ADMIN")
-                .antMatchers("/logout",
-                        "/carts/user",
-                        "/carts/create/product",
-                        "/carts/update/cart/**",
-                        "/carts/delete/**",
-                        "/users/myinfo")
+                .antMatchers("/logout")
                 .authenticated()
+                .antMatchers( "/users/**")
+                .hasAnyRole("ADMIN", "USER", "DATA")
+                .antMatchers("/roles/**")
+                .hasAnyRole("ADMIN")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
