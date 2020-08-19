@@ -31,16 +31,25 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/swagger-ui.html",
                         "/v2/api-docs",
                         "/webjars/**",
-                        "/createnewuser")
-                .permitAll()
-                .antMatchers("/logout")
-                .authenticated()
-                .antMatchers( "/users/**")
-                .hasAnyRole("ADMIN", "USER", "DATA")
-                .antMatchers("/roles/**")
-                .hasAnyRole("ADMIN")
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+                        "/createnewuser").permitAll()
+
+                .antMatchers("/logout").authenticated() //when you auth. any users can access that endpoint
+
+                .antMatchers( "/users/**").hasAnyRole("ADMIN")
+
+                .antMatchers("/roles/**").hasAnyRole("ADMIN")
+
+                .antMatchers("/carts/user/**").authenticated()
+                .antMatchers("/carts/create/product/**").authenticated()
+                .antMatchers("/carts/update/cart/1/product/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("//carts/delete/cart/1/product/**").hasAnyRole("ADMIN", "USER")
+
+                .antMatchers("/carts/cart/**").hasAnyRole("ADMIN")
+
+                .antMatchers("/products/**").hasAnyRole("ADMIN")
+
+                .antMatchers("/users/myinfo").authenticated()
+
+                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
