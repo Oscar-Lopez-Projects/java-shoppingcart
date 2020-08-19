@@ -35,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
                 .antMatchers("/logout").authenticated() //when you auth. any users can access that endpoint
 
-                .antMatchers( "/users/**").hasAnyRole("ADMIN")
+                .antMatchers( "/users/users", "/users/user/**").hasAnyRole("ADMIN")
 
                 .antMatchers("/roles/**").hasAnyRole("ADMIN")
 
@@ -48,7 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
                 .antMatchers("/products/**").hasAnyRole("ADMIN")
 
-                .antMatchers("/users/myinfo").authenticated()
+                .antMatchers("/users/myinfo").hasAnyRole("ADMIN", "USER")
 
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
