@@ -1,6 +1,7 @@
 package com.lambdaschool.shoppingcart.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -34,21 +35,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/createnewuser").permitAll()
 
                 .antMatchers("/logout").authenticated() //when you auth. any users can access that endpoint
-
-                .antMatchers( "/users/users", "/users/user/**").hasAnyRole("ADMIN")
-
+                .antMatchers("/users/users", "/users/user/**").hasAnyRole("ADMIN")
                 .antMatchers("/roles/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("ADMIN")
+                .antMatchers("/users/**").authenticated()
+                .antMatchers("/carts/user", "/carts/create/**").authenticated()
+                .antMatchers("/carts/cart/**", "/carts/update/**", "/carts/delete/**").hasAnyRole("ADMIN")
+                .antMatchers("/products/product/**").hasAnyRole("ADMIN")
+                .antMatchers("/users/myinfo").authenticated()
 
-                .antMatchers("/carts/user/**").authenticated()
-                .antMatchers("/carts/create/product/**").authenticated()
-                .antMatchers("/carts/update/cart/1/product/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("//carts/delete/cart/1/product/**").hasAnyRole("ADMIN", "USER")
-
-                .antMatchers("/carts/cart/**").hasAnyRole("ADMIN")
-
-                .antMatchers("/products/**").hasAnyRole("ADMIN")
-
-                .antMatchers("/users/myinfo").hasAnyRole("ADMIN", "USER")
 
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
